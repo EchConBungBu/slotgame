@@ -13,8 +13,8 @@ bunny.anchor.x = 0.5;
 bunny.anchor.y = 0.5;
 bunny.position.x = 400;
 bunny.position.y = 300;
-bunny.scale.x = 2;
-bunny.scale.y = 2;
+bunny.scale.x = 4;
+bunny.scale.y = 4;
 stage.addChild(bunny);
 animate();
 
