@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+  	"strictNullChecks": true,
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "target": "es5",
+    "module": "commonjs"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+        "./typings/index.d.ts",
+        "./src/app.ts"
+    ]
+}
