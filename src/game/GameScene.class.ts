@@ -21,7 +21,7 @@ export class GameScene extends Scene {
         this.addChild(this.bunny);
 
         //var _this = this;
-        var button = new PIXI.Sprite(PIXI.Texture.fromImage("img/MenuButton.png"));
+        var button = new PIXI.Sprite(PIXI.Texture.fromImage("img/Menubutton.png"));
         button.position.x = ScenesManager.defaultWidth - 200;
         button.scale.x = 0.5;
         button.scale.y = 0.5;
