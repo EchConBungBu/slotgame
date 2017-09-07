@@ -1,3 +1,6 @@
-sudo git pull origin master
-sudo npm install http-server -g
-sudo http-server . -p 80
+#!/bin/sh
+ls
+git pull origin master
+npm install http-server -g
+http-server . -p 80
+exit
