@@ -34,7 +34,7 @@ import * as PIXI from 'pixi.js';
 var scenesManager = ScenesManager;
 
 //note the scale parameter is set to true
-scenesManager.create(350, 480, true);
+scenesManager.create(380, 480, true);
 
 //create a the game scene
 var game = scenesManager.createScene('game', GameScene);
