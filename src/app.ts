@@ -7,6 +7,7 @@ import {GameScene} from "./game/GameScene.class";
 import {IntroScene} from "./game/IntroScene.class";
 import {MenuScene} from "./game/MenuScene.class";
 import {BonusScene} from "./game/BonusScene.class";
+import {NormalScene} from "./game/NormalScene.class";
 import * as PIXI from 'pixi.js';
 
 // var renderer = PIXI.autoDetectRenderer(800, 600, {backgroundColor: 0x1099bb});
@@ -35,12 +36,13 @@ import * as PIXI from 'pixi.js';
 var scenesManager = ScenesManager;
 
 //note the scale parameter is set to true
-scenesManager.create(480, 640, true);
+scenesManager.create(650, 640, false);
 
 //create a the game scene
 var game = scenesManager.createScene('game', GameScene);
 var intro = scenesManager.createScene('intro', IntroScene);
 var menu = scenesManager.createScene('menu', MenuScene);
 var bonus = scenesManager.createScene('bonus', BonusScene);
+var normal = scenesManager.createScene('normal', NormalScene);
 
-scenesManager.goToScene('bonus');
+scenesManager.goToScene('normal');
