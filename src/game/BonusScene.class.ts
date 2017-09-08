@@ -22,7 +22,49 @@ export class BonusScene extends Scene {
     private texture100Gold: PIXI.Texture;
 
     constructor() {
-        super();
+        super();        
+
+        this.initQuestionButton();       
+        
+        this.interactive = true;
+    }
+
+    private answer25Gold = () => {
+        if (this.isPaused()) return;         
+        this.is25Gold = true;
+        this.q1.texture = this.texture25Gold;
+    }
+
+    private answer50Gold = () => {
+        if (this.isPaused()) return;         
+        this.is50Gold = true;
+        this.q2.texture = this.texture50Gold;
+    }
+
+    private answer100Gold = () => {
+        if (this.isPaused()) return;         
+        this.is100Gold = true;
+        this.q3.texture = this.texture100Gold;
+    }
+
+    public update() {
+        super.update();
+        //if (this.q1.alpha < 1) this.q1.alpha += 0.01;
+        //else ScenesManager.goToScene('menu');
+        if (this.is25Gold == true && this.is50Gold == true && this.is100Gold == true) {
+            this.addChild(this.menu);
+        }
+    }
+
+    private goTo = () => {
+        if (this.isPaused()) return;                
+            ScenesManager.goToScene('normal');     
+            this.removeAllTexture();   
+            this.initQuestionButton();    
+            this.resetGold();
+    }
+
+    private initQuestionButton = () => {
 
         this.is25Gold = false;
         this.is50Gold = false;
@@ -32,13 +74,12 @@ export class BonusScene extends Scene {
         this.texture50Gold = PIXI.Texture.fromImage("img/50Gold.png");
         this.texture100Gold = PIXI.Texture.fromImage("img/100Gold.png");
 
-
         this.menu = new PIXI.Sprite(PIXI.Texture.fromImage("img/Menubutton.png"));
         this.menu.position.x = ScenesManager.defaultWidth - 200;
         this.menu.scale.x = 0.5;
         this.menu.scale.y = 0.5;
         this.menu.on("mouseup", this.goTo);
-        this.menu.interactive = true;
+        this.menu.interactive = true;        
 
         this.q1 = new PIXI.Sprite(PIXI.Texture.fromImage("img/question.png"));
         this.q1.scale.x = 0.25;
@@ -74,39 +115,19 @@ export class BonusScene extends Scene {
         this.addChild(this.q2);
         this.addChild(this.q3);
 
-        this.interactive = true;
     }
 
-    private answer25Gold = () => {
-        if (this.isPaused()) return;         
-        this.is25Gold = true;
-        this.q1.texture = this.texture25Gold;
+    private removeAllTexture = () => {
+        this.removeChild(this.q1);
+        this.removeChild(this.q2);
+        this.removeChild(this.q3);
+        this.removeChild(this.menu);
     }
 
-    private answer50Gold = () => {
-        if (this.isPaused()) return;         
-        this.is50Gold = true;
-        this.q2.texture = this.texture50Gold;
-    }
-
-    private answer100Gold = () => {
-        if (this.isPaused()) return;         
-        this.is100Gold = true;
-        this.q3.texture = this.texture100Gold;
-    }
-
-    public update() {
-        super.update();
-        //if (this.q1.alpha < 1) this.q1.alpha += 0.01;
-        //else ScenesManager.goToScene('menu');
-        if (this.is25Gold == true && this.is50Gold == true && this.is100Gold == true) {
-            this.addChild(this.menu);
-        }
-    }
-
-    private goTo = () => {
-        if (this.isPaused()) return;                
-            ScenesManager.goToScene('menu');
+    private resetGold = () =>{
+        this.is25Gold = false;
+        this.is50Gold = false;
+        this.is100Gold = false;
     }
 }
 

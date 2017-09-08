@@ -31,9 +31,7 @@ export class IntroScene extends Scene {
 
         // move the sprite to the center of the screen
         this.logo.position.x = ScenesManager.defaultWidth / 2;
-        this.logo.position.y = ScenesManager.defaultHeight /2;
-
-        
+        this.logo.position.y = ScenesManager.defaultHeight / 2;        
     }
 
     public update() {

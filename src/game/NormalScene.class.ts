@@ -10,6 +10,7 @@ export class NormalScene extends Scene {
     private slot: PIXI.Sprite;
     private buttonBonus: PIXI.Sprite;
     private spinText: PIXI.Text;
+    private freeSpinText: PIXI.Text;
     private styleText: PIXI.TextStyle;
 
     readonly STATE_ZERO:number = 0;
@@ -33,9 +34,6 @@ export class NormalScene extends Scene {
     readonly INC:any = [20,20,25,25,25];
     private stopUpdate:any = false;
     
-    //private stage:any;
-    //private renderer;
-    
     constructor() {
         super();
 
@@ -52,6 +50,10 @@ export class NormalScene extends Scene {
         this.spinText = new PIXI.Text(String(this.spin));
         this.spinText.x = 250;
         this.spinText.y = 50;
+
+        this.freeSpinText = new PIXI.Text(String(this.spin));
+        this.freeSpinText.x = 0;
+        this.freeSpinText.y = ScenesManager.defaultHeight/2;
        
         this.slot.position.x = 0;
         this.slot.position.y = 0;
@@ -67,23 +69,13 @@ export class NormalScene extends Scene {
 
         this.buttonMachine.interactive = true;
         this.buttonBonus.interactive = true;
-        //this.slot.interactive = true;
-        //this.tiles.interactive = true;
 
         this.gameStatus = this.STATE_ZERO;
-
-        /*this.stage = new PIXI.Stage(0x000000);
-        this.renderer = PIXI.autoDetectRenderer(
-            window.screen.width, window.screen.height,
-            {antialiasing: false, transparent: false, resolution: 1}  
-        );*/
-
-        //this.addChild(this.renderer.view);
         this.addChild(this.slot);
         this.addChild(this.buttonMachine);
         this.addChild(this.spinText);
 
-        this.preChoosedPosition = [1,2,3,4,5];
+        this.preChoosedPosition = [1,3,2,5,4];
 
         for(var i = 0; i < this.SLOT_NUMBER; i++) {
             this.slotSprite[i] = new PIXI.extras.TilingSprite(this.tiles, this.TILE_WIDTH, this.TILE_HEIGHT + 200);
@@ -101,36 +93,32 @@ export class NormalScene extends Scene {
         if (this.isPaused()) return;   
         if (this.spin > 0) {
             this.spin -= 1;
+            this.freeSpinText.text = "";
             this.startAnimation();      
         } else {
-            alert("Sorry!, You have 0 spin");  
+            this.freeSpinText.text = "There are no spins";
         }
-        //this.is25Gold = true;
-        //this.q1.texture = this.texture25Gold;
     }
 
     private getBonus = () => {
-         if (this.isPaused()) return;  
+         if (this.isPaused()) return;
          ScenesManager.goToScene('bonus');
+         this.removeChild(this.buttonBonus);
     }
 
 
     public update() {
         super.update();
+
         if (!this.stopUpdate) {
             this.draw();
         }
-        //if (this.q1.alpha < 1) this.q1.alpha += 0.01;
-        //else ScenesManager.goToScene('menu');
-        //if (this.is25Gold == true && this.is50Gold == true && this.is100Gold == true) {
-            //this.addChild(this.menu);
-        //}
     }
 
-    private goTo = () => {
+    /*private goTo = () => {
         if (this.isPaused()) return;                
             ScenesManager.goToScene('menu');
-    }
+    }*/
 
     private startAnimation = () => {
         if(this.gameStatus == this.STATE_INIT || this.gameStatus == this.STATE_CHECK_WIN ) {
@@ -161,7 +149,7 @@ export class NormalScene extends Scene {
         var x = this.getRandomInt(0, 100);
         if(x > 50) {
             x = this.getRandomInt(0, 6);
-            return [x,3,2,1,x];
+            return [0,6,6,1,5];
         }
         return [this.getRandomInt(0,6)
                 , this.getRandomInt(0,6)
@@ -191,7 +179,6 @@ export class NormalScene extends Scene {
         if(this.finalTileY[0]-5 <= 0) {
             this.gameStatus = this.STATE_CHECK_WIN;            
         }
-      //  this.gameStatus = this.STATE_CHECK_WIN;
           
       } else if(this.gameStatus == this.STATE_CHECK_WIN) {
 
@@ -199,6 +186,9 @@ export class NormalScene extends Scene {
         var checkWin = true;
         var checkBonus = false;
         var checkFreeSpin = false;
+
+
+
 
         // check win
         for(var i = 1; i < this.SLOT_NUMBER; i++) {
@@ -208,25 +198,32 @@ export class NormalScene extends Scene {
             }
         }
          // check win (main-diagonal line 3x3)
-        for(var i = 1; i < this.SLOT_NUMBER; i++) {
-            if(this.preChoosedPosition[3] == (this.preChoosedPosition[2] - 1)
-                && this.preChoosedPosition[2] == (this.preChoosedPosition[1] - 1)) {
-                this.stopUpdate = true;
-                checkWin = true;
-            }
+        for(var i = 0; i < this.SLOT_NUMBER; i++) {
+            if (i == this.SLOT_NUMBER/2 + 1) {
+                if(this.preChoosedPosition[i] == (this.preChoosedPosition[i-1] - 1)
+                && this.preChoosedPosition[i-1] == (this.preChoosedPosition[i-1] - 1)) {
+                    this.stopUpdate = true;
+                    checkWin = true;
+                }
+            }            
         }
+
+        this.preChoosedPosition[0] = (this.preChoosedPosition[0] == 0?7:this.preChoosedPosition[0]);
+
          // check bonus (main-diagonal line)
-        if(this.preChoosedPosition[0] == (this.preChoosedPosition[2] - 1)
-            && this.preChoosedPosition[2] == (this.preChoosedPosition[4] - 1)) {
+        if(this.preChoosedPosition[0] == (this.preChoosedPosition[Math.floor(this.SLOT_NUMBER/2)] - 1)
+            && this.preChoosedPosition[Math.floor(this.SLOT_NUMBER/2)] == (this.preChoosedPosition[this.SLOT_NUMBER - 1] - 1)) {
                 this.stopUpdate = true;
                 checkBonus = true;
-        }
+        }        
+
         // check bonus (sub-diagonal line)
-        if(this.preChoosedPosition[4] == (this.preChoosedPosition[2] - 1)
-            && this.preChoosedPosition[2] == (this.preChoosedPosition[0] - 1)) {
+        if(this.preChoosedPosition[this.SLOT_NUMBER - 1] == (this.preChoosedPosition[Math.floor(this.SLOT_NUMBER/2)] - 1)
+            && this.preChoosedPosition[Math.floor(this.SLOT_NUMBER/2)] == (this.preChoosedPosition[0] - 1)) {
                 this.stopUpdate = true;
                 checkBonus = true;
         }
+
         if(this.preChoosedPosition[0] == (this.preChoosedPosition[1])
             && this.preChoosedPosition[1] == (this.preChoosedPosition[2])) {
                 this.stopUpdate = true;
@@ -238,20 +235,21 @@ export class NormalScene extends Scene {
         }
         if (this.stopUpdate) {
             if (checkWin) {
-                alert("Congratulations, you won!");  
+                this.freeSpinText.text = "Congratulation, You won!";
             }
             if (checkBonus) {
                  this.addChild(this.buttonBonus);
             }
             if (checkFreeSpin) {
-                alert("Congratulations, you got 10 free spins!");  
+                this.spin += 5;
+                this.freeSpinText.text = "Congratulations, you've got 5 free spins!";
+                this.spinText.text = String(this.spin);
+                this.addChild(this.freeSpinText);
             }
         }
         return; //no more animation
       }
-      //renderer.render(stage);
-     // requestAnimationFrame(this.draw);
-    }//draw
+    }
 
 }
 
