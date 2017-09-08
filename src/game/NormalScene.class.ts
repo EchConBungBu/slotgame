@@ -26,6 +26,7 @@ export class NormalScene extends Scene {
     private slotSprite:any = [];
     private preChoosedPosition:any = [];
     readonly INC:any = [20,20,25,25,25];
+    private stopUpdate:any = false;
     //private stage:any;
     //private renderer;
     
@@ -89,7 +90,9 @@ export class NormalScene extends Scene {
 
     public update() {
         super.update();
-      //  this.draw();
+        if (!this.stopUpdate) {
+            this.draw();
+        }
         //if (this.q1.alpha < 1) this.q1.alpha += 0.01;
         //else ScenesManager.goToScene('menu');
         //if (this.is25Gold == true && this.is50Gold == true && this.is100Gold == true) {
@@ -104,6 +107,7 @@ export class NormalScene extends Scene {
 
     private startAnimation = () => {
         if(this.gameStatus == this.STATE_INIT || this.gameStatus == this.STATE_CHECK_WIN ) {
+            this.stopUpdate = false;    
             this.preChoosedPosition = this.getRandomPositions(); 
             for(var i = 0; i < this.SLOT_NUMBER; i++) {
                 //preChoosedPosition[i] = getRandomInt(0,6);
@@ -142,7 +146,6 @@ export class NormalScene extends Scene {
     private draw = () => {
         //console.info("draw("+gameStatus+")");
         if(this.gameStatus == this.STATE_ZERO) {
-
             this.gameStatus = this.STATE_INIT;
 
         } else if(this.gameStatus == this.STATE_INIT) {
@@ -161,7 +164,6 @@ export class NormalScene extends Scene {
         if(this.finalTileY[0]-5 <= 0) {
             this.gameStatus = this.STATE_CHECK_WIN;            
         }
-        
       //  this.gameStatus = this.STATE_CHECK_WIN;
           
       } else if(this.gameStatus == this.STATE_CHECK_WIN) {
@@ -171,17 +173,21 @@ export class NormalScene extends Scene {
 
         for(var i = 1; i < this.SLOT_NUMBER; i++) {
             if(this.preChoosedPosition[i] != this.preChoosedPosition[i-1]) {
+                this.stopUpdate = false;
                 check = false;
             }
         }
-        if(check) {
-            alert("Congratulations, you won!");   
+        if (check) {
+            this.stopUpdate = true;    
+        }
+        if(check && this.stopUpdate) {
+            alert("Congratulations, you won!");  
         }
 
         return; //no more animation
       }
       //renderer.render(stage);
-      requestAnimationFrame(this.draw);
+     // requestAnimationFrame(this.draw);
     }//draw
 
 }
