@@ -5,10 +5,6 @@ import * as PIXI from 'pixi.js';
 // Class
 export class BonusScene extends Scene {
 
-    //private q1: PIXI.Sprite;
-    //private q2: PIXI.Sprite;
-    //private q3: PIXI.Sprite;
-
     private button: PIXI.Sprite;
     private q1: PIXI.Sprite;
     private q2: PIXI.Sprite;

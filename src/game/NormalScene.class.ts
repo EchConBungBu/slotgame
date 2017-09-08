@@ -1,5 +1,6 @@
 import {ScenesManager} from "../engine/ScenesManager.class";
 import {Scene} from "../engine/Scene.class";
+import {RuleAllSpinsMatch} from "./RuleAllSpinsMatch.class";
 import * as PIXI from 'pixi.js';
 
 // Class
@@ -167,18 +168,8 @@ export class NormalScene extends Scene {
           this.gameStatus = this.STATE_CHECK_WIN;
           
       } else if(this.gameStatus == this.STATE_MOVING) {
-        //console.log("moving");
-        this.spinText.text = String(this.spin);
-        for(var i = 0; i< this.SLOT_NUMBER; i++) {
-            if(this.finalTileY[i] > 0) {
-                this.slotSprite[i].tilePosition.y = this.slotSprite[i].tilePosition.y + this.INC[i];
-                this.finalTileY[i]= this.finalTileY[i] - this.INC[i];
-                //console.info( "dec.finalTile["+i+"]="+finalTileY[i] );
-            }            
-         }
-        if(this.finalTileY[0]-5 <= 0) {
-            this.gameStatus = this.STATE_CHECK_WIN;            
-        }
+
+            this.moving();
           
       } else if(this.gameStatus == this.STATE_CHECK_WIN) {
 
@@ -187,15 +178,12 @@ export class NormalScene extends Scene {
         var checkBonus = false;
         var checkFreeSpin = false;
 
-
-
-
         // check win
         for(var i = 1; i < this.SLOT_NUMBER; i++) {
-            if(this.preChoosedPosition[i] != this.preChoosedPosition[i-1]) {
-                this.stopUpdate = false;
-                checkWin = false;
-            }
+
+            checkWin = RuleAllSpinsMatch.checkWin(this.preChoosedPosition,this.SLOT_NUMBER);
+            this.stopUpdate = RuleAllSpinsMatch.stopUpdate;
+            
         }
          // check win (main-diagonal line 3x3)
         for(var i = 0; i < this.SLOT_NUMBER; i++) {
@@ -249,6 +237,21 @@ export class NormalScene extends Scene {
         }
         return; //no more animation
       }
+    }
+
+    private moving = () => {
+        //console.log("moving");
+        this.spinText.text = String(this.spin);
+        for(var i = 0; i< this.SLOT_NUMBER; i++) {
+            if(this.finalTileY[i] > 0) {
+                this.slotSprite[i].tilePosition.y = this.slotSprite[i].tilePosition.y + this.INC[i];
+                this.finalTileY[i]= this.finalTileY[i] - this.INC[i];
+                //console.info( "dec.finalTile["+i+"]="+finalTileY[i] );
+            }            
+         }
+        if(this.finalTileY[0]-5 <= 0) {
+            this.gameStatus = this.STATE_CHECK_WIN;            
+        }
     }
 
 }
