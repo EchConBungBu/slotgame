@@ -33,7 +33,7 @@ export class BonusScene extends Scene {
         this.texture100Gold = PIXI.Texture.fromImage("img/100Gold.png");
 
 
-        this.menu = new PIXI.Sprite(PIXI.Texture.fromImage("img/MenuButton.png"));
+        this.menu = new PIXI.Sprite(PIXI.Texture.fromImage("img/Menubutton.png"));
         this.menu.position.x = ScenesManager.defaultWidth - 200;
         this.menu.scale.x = 0.5;
         this.menu.scale.y = 0.5;
