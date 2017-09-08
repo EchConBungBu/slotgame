@@ -23,7 +23,7 @@ export class NormalScene extends Scene {
     readonly TILE_WIDTH:number = 100;
     readonly N_CYCLE:number = 5;
     readonly TOT_TILES:number= 7;
-    readonly SPIN_NUMBER:number = 1;
+    readonly SPIN_NUMBER:number = 5;
 
     private gameStatus:number = 0;
     private spin:number = this.SPIN_NUMBER;
