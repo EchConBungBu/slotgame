@@ -150,7 +150,7 @@ export class NormalScene extends Scene {
         var x = this.getRandomInt(0, 100);
         if(x > 50) {
             x = this.getRandomInt(0, 6);
-            return [0,6,6,1,5];
+            return [1,3,2,3,3];
         }
         return [this.getRandomInt(0,6)
                 , this.getRandomInt(0,6)
@@ -173,57 +173,44 @@ export class NormalScene extends Scene {
           
       } else if(this.gameStatus == this.STATE_CHECK_WIN) {
 
-        //console.log("checking win");
         var checkWin = true;
         var checkBonus = false;
         var checkFreeSpin = false;
 
         // check win
-        for(var i = 1; i < this.SLOT_NUMBER; i++) {
-
-            checkWin = RuleAllSpinsMatch.checkWin(this.preChoosedPosition,this.SLOT_NUMBER);
-            this.stopUpdate = RuleAllSpinsMatch.stopUpdate;
-            
+        checkWin = RuleAllSpinsMatch.checkWin(this.preChoosedPosition,this.SLOT_NUMBER);
+        this.stopUpdate = checkWin;
+        if (!checkWin) {
+            // check win (main-diagonal line 3x3)
+            checkWin = RuleAllSpinsMatch.checkWinMainDiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
+            this.stopUpdate = checkWin;
         }
-         // check win (main-diagonal line 3x3)
-        for(var i = 0; i < this.SLOT_NUMBER; i++) {
-            if (i == this.SLOT_NUMBER/2 + 1) {
-                if(this.preChoosedPosition[i] == (this.preChoosedPosition[i-1] - 1)
-                && this.preChoosedPosition[i-1] == (this.preChoosedPosition[i-1] - 1)) {
-                    this.stopUpdate = true;
-                    checkWin = true;
-                }
-            }            
+        if (!checkWin) {
+            // check win (sub-diagonal line 3x3)
+            checkWin = RuleAllSpinsMatch.checkWinSubDiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
+            this.stopUpdate = checkWin;
         }
 
         this.preChoosedPosition[0] = (this.preChoosedPosition[0] == 0?7:this.preChoosedPosition[0]);
-
-         // check bonus (main-diagonal line)
-        if(this.preChoosedPosition[0] == (this.preChoosedPosition[Math.floor(this.SLOT_NUMBER/2)] - 1)
-            && this.preChoosedPosition[Math.floor(this.SLOT_NUMBER/2)] == (this.preChoosedPosition[this.SLOT_NUMBER - 1] - 1)) {
-                this.stopUpdate = true;
-                checkBonus = true;
-        }        
-
-        // check bonus (sub-diagonal line)
-        if(this.preChoosedPosition[this.SLOT_NUMBER - 1] == (this.preChoosedPosition[Math.floor(this.SLOT_NUMBER/2)] - 1)
-            && this.preChoosedPosition[Math.floor(this.SLOT_NUMBER/2)] == (this.preChoosedPosition[0] - 1)) {
-                this.stopUpdate = true;
-                checkBonus = true;
+        if (!checkWin) {
+            // check bonus (main-diagonal line 5x5)
+            checkBonus = RuleAllSpinsMatch.checkBonusMainDiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
+            this.stopUpdate = checkBonus;
+            if (!checkBonus) {
+                // check bonus (sub-diagonal line 5x5)
+                checkBonus = RuleAllSpinsMatch.checkBonusSubDiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
+                this.stopUpdate = checkBonus;
+            }
         }
-
-        if(this.preChoosedPosition[0] == (this.preChoosedPosition[1])
-            && this.preChoosedPosition[1] == (this.preChoosedPosition[2])) {
-                this.stopUpdate = true;
-                checkFreeSpin = true;
-        }
-
-        if (checkWin || checkBonus || checkFreeSpin) {
-            this.stopUpdate = true;
+        if (!checkWin && !checkBonus) {
+            // check free spin
+            checkFreeSpin = RuleAllSpinsMatch.checkFreeSpin(this.preChoosedPosition,this.SLOT_NUMBER);
+            this.stopUpdate = checkFreeSpin;
         }
         if (this.stopUpdate) {
             if (checkWin) {
                 this.freeSpinText.text = "Congratulation, You won!";
+                this.addChild(this.freeSpinText);
             }
             if (checkBonus) {
                  this.addChild(this.buttonBonus);
@@ -240,19 +227,16 @@ export class NormalScene extends Scene {
     }
 
     private moving = () => {
-        //console.log("moving");
         this.spinText.text = String(this.spin);
         for(var i = 0; i< this.SLOT_NUMBER; i++) {
             if(this.finalTileY[i] > 0) {
                 this.slotSprite[i].tilePosition.y = this.slotSprite[i].tilePosition.y + this.INC[i];
                 this.finalTileY[i]= this.finalTileY[i] - this.INC[i];
-                //console.info( "dec.finalTile["+i+"]="+finalTileY[i] );
             }            
          }
         if(this.finalTileY[0]-5 <= 0) {
             this.gameStatus = this.STATE_CHECK_WIN;            
         }
     }
-
 }
 
