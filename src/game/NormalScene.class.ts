@@ -124,6 +124,7 @@ export class NormalScene extends Scene {
     private startAnimation = () => {
         if(this.gameStatus == this.STATE_INIT || this.gameStatus == this.STATE_CHECK_WIN ) {
             this.stopUpdate = false;    
+             this.removeChild(this.buttonBonus);
             this.preChoosedPosition = this.getRandomPositions(); 
             for(var i = 0; i < this.SLOT_NUMBER; i++) {
                 //preChoosedPosition[i] = getRandomInt(0,6);

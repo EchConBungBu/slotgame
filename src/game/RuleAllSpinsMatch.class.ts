@@ -3,14 +3,14 @@ import * as PIXI from 'pixi.js';
 export class RuleAllSpinsMatch {
 	constructor() {
 	}
-
+	// check win
 	public static checkWin = (preChoosedPosition:any[], slotNumber:number): boolean => {
 		var check = true;
 		for(var i = 1; i < slotNumber; i++) {
 		    if(preChoosedPosition[i] != preChoosedPosition[i-1]) {
 		         check = false;
 		    }
-		}
+		}	
 
 		return check;
 	}
