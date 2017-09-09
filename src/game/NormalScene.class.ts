@@ -53,8 +53,8 @@ export class NormalScene extends Scene {
         this.spinText.y = 50;
 
         this.freeSpinText = new PIXI.Text(String(this.spin));
-        this.freeSpinText.x = ScenesManager.defaultWidth / 2;
-        this.freeSpinText.y = ScenesManager.defaultHeight / 2;
+        this.freeSpinText.x = 70;
+        this.freeSpinText.y = 170;
        
         this.slot.position.x = 0;
         this.slot.position.y = -3;
@@ -140,21 +140,35 @@ export class NormalScene extends Scene {
         
     private getRandomPositions() {
         var x = this.getRandomInt(0, 100);
+        // bonus
         if(x > 90) {
             x = this.getRandomInt(0, 6);
             return [5,x,4,x,3];
         }
+        // bonus
         if(x > 80) {
             x = this.getRandomInt(0, 6);
-            return [1,3,2,3,3];
+            return [3,x,4,x,5];
         }
+        // win
         if(x > 70) {
             x = this.getRandomInt(0, 6);
-            return [1,3,2,3,3];
+            return [x,1,2,3,x];
         }
+        // win
         if(x > 50) {
             x = this.getRandomInt(0, 6);
+            return [x,4,3,2,x];
+        }
+        // win
+        if(x > 40) {
+            x = this.getRandomInt(0, 6);
             return [x,x,x,x,x];
+        }
+        //free spins
+        if (x > 30) {
+            x = this.getRandomInt(0, 6);
+            return [6,6,6,x,x];
         }
         return [this.getRandomInt(0,6)
                 , this.getRandomInt(0,6)
@@ -164,11 +178,9 @@ export class NormalScene extends Scene {
     }
 
     private draw = () => {
-        //console.info("draw("+gameStatus+")");
         if(this.gameStatus == this.STATE_ZERO) {
             this.gameStatus = this.STATE_INIT;
         } else if(this.gameStatus == this.STATE_INIT) {
-          //console.log("waiting start");
           this.gameStatus = this.STATE_CHECK_WIN;
           
       } else if(this.gameStatus == this.STATE_MOVING) {

@@ -51,7 +51,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkBonusSecondiagonalLine
-	it("should get a bonus in the second diagonal line 5x5", () => {
+	it("should get a bonus in the secondary diagonal line 5x5", () => {
 		// arrange
 		let expected = true;
 		let positions = [1,4,2,6,3];
@@ -63,7 +63,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkBonusSecondiagonalLine
-	it("should not get a bonus in the second diagonal line 5x5", () => {
+	it("should not get a bonus in the secondary diagonal line 5x5", () => {
 		// arrange
 		let expected = false;
 		let positions = [1,4,2,6,4];
@@ -75,7 +75,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkWinSecondiagonalLine
-	it("should be won in the second diagonal line 3x3", () => {
+	it("should be won in the secondary diagonal line 3x3", () => {
 		// arrange
 		let expected = true;
 		let positions = [4,1,2,3,6];
@@ -87,7 +87,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkWinSecondiagonalLine
-	it("should not win in the second diagonal line 3x3", () => {
+	it("should not win in the secondary diagonal line 3x3", () => {
 		// arrange
 		let expected = false;
 		let positions = [1,1,2,4,4];
