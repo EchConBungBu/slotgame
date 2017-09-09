@@ -27,7 +27,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkBonusMainDiagonalLine
-	it("should get a bonus", () => {
+	it("should get a bonus in the main diagonal line 5x5", () => {
 		// arrange
 		let expected = true;
 		let positions = [3,4,2,6,1];
@@ -39,7 +39,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkBonusMainDiagonalLine
-	it("should not get a bonus", () => {
+	it("should not get a bonus in the main diagonal line 5x5", () => {
 		// arrange
 		let expected = false;
 		let positions = [1,4,2,6,1];
@@ -50,56 +50,56 @@ describe("RuleAllSpinsMatch", () => {
 		expect(actual).to.be.equal(expected);
 	});
 
-	// test checkBonusSubDiagonalLine
-	it("should get a bonus", () => {
+	// test checkBonusSecondiagonalLine
+	it("should get a bonus in the second diagonal line 5x5", () => {
 		// arrange
 		let expected = true;
 		let positions = [1,4,2,6,3];
 		let slotNumber = 5;
 		// act
-		let actual = RuleAllSpinsMatch.checkBonusSubDiagonalLine(positions, slotNumber);
+		let actual = RuleAllSpinsMatch.checkBonusSecondiagonalLine(positions, slotNumber);
 		// assert
 		expect(actual).to.be.equal(expected);
 	});
 
-	// test checkBonusSubDiagonalLine
-	it("should not get a bonus", () => {
+	// test checkBonusSecondiagonalLine
+	it("should not get a bonus in the second diagonal line 5x5", () => {
 		// arrange
 		let expected = false;
 		let positions = [1,4,2,6,4];
 		let slotNumber = 5;
 		// act
-		let actual = RuleAllSpinsMatch.checkBonusSubDiagonalLine(positions, slotNumber);
+		let actual = RuleAllSpinsMatch.checkBonusSecondiagonalLine(positions, slotNumber);
 		// assert
 		expect(actual).to.be.equal(expected);
 	});
 
-	// test checkWinSubDiagonalLine
-	it("should be won", () => {
+	// test checkWinSecondiagonalLine
+	it("should be won in the second diagonal line 3x3", () => {
 		// arrange
 		let expected = true;
 		let positions = [4,1,2,3,6];
 		let slotNumber = 5;
 		// act
-		let actual = RuleAllSpinsMatch.checkWinSubDiagonalLine(positions, slotNumber);
+		let actual = RuleAllSpinsMatch.checkWinSecondiagonalLine(positions, slotNumber);
 		// assert
 		expect(actual).to.be.equal(expected);
 	});
 
-	// test checkWinSubDiagonalLine
-	it("should not win", () => {
+	// test checkWinSecondiagonalLine
+	it("should not win in the second diagonal line 3x3", () => {
 		// arrange
 		let expected = false;
 		let positions = [1,1,2,4,4];
 		let slotNumber = 5;
 		// act
-		let actual = RuleAllSpinsMatch.checkWinSubDiagonalLine(positions, slotNumber);
+		let actual = RuleAllSpinsMatch.checkWinSecondiagonalLine(positions, slotNumber);
 		// assert
 		expect(actual).to.be.equal(expected);
 	});
 
 	// test checkWinMainDiagonalLine
-	it("should be won", () => {
+	it("should be won in the main diagonal line 3x3", () => {
 		// arrange
 		let expected = true;
 		let positions = [4,3,2,1,6];
@@ -111,7 +111,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkWinMainDiagonalLine
-	it("should not win", () => {
+	it("should not win in the main diagonal line 3x3", () => {
 		// arrange
 		let expected = false;
 		let positions = [1,3,2,4,4];
@@ -123,7 +123,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkWin
-	it("should be won", () => {
+	it("should be won in the special case", () => {
 		// arrange
 		let expected = true;
 		let positions = [1,1,1,1,1];
@@ -135,7 +135,7 @@ describe("RuleAllSpinsMatch", () => {
 	});
 
 	// test checkWin
-	it("should not win", () => {
+	it("should not win in the special case", () => {
 		// arrange
 		let expected = false;
 		let positions = [1,2,1,1,1];

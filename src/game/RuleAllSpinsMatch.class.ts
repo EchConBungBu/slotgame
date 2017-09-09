@@ -29,8 +29,8 @@ export class RuleAllSpinsMatch {
 
 		return check;
 	}
-	// check win (sub-diagonal line 3x3)
-	public static checkWinSubDiagonalLine = (preChoosedPosition:any[], slotNumber:number): boolean => {
+	// check win (second-diagonal line 3x3)
+	public static checkWinSecondiagonalLine = (preChoosedPosition:any[], slotNumber:number): boolean => {
 		var check = false;
 		for(var i = 0; i < slotNumber; i++) {
             if (i == Math.floor(slotNumber/2) - 1) {
@@ -49,8 +49,8 @@ export class RuleAllSpinsMatch {
             && preChoosedPosition[Math.floor(slotNumber/2)] == (preChoosedPosition[slotNumber - 1] + 1));
 	}
 
-	// check bonus (sub-diagonal line 5x5)
-	public static checkBonusSubDiagonalLine = (preChoosedPosition:any[], slotNumber:number): boolean => {
+	// check bonus (second-diagonal line 5x5)
+	public static checkBonusSecondiagonalLine = (preChoosedPosition:any[], slotNumber:number): boolean => {
 		return (preChoosedPosition[0] == (preChoosedPosition[Math.floor(slotNumber/2)] - 1)
             && preChoosedPosition[Math.floor(slotNumber/2)] == (preChoosedPosition[slotNumber - 1] - 1));
 	}

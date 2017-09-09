@@ -187,8 +187,8 @@ export class NormalScene extends Scene {
             this.stopUpdate = checkWin;
         }
         if (!checkWin) {
-            // check win (sub-diagonal line 3x3)
-            checkWin = RuleAllSpinsMatch.checkWinSubDiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
+            // check win (second-diagonal line 3x3)
+            checkWin = RuleAllSpinsMatch.checkWinSecondiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
             this.stopUpdate = checkWin;
         }
 
@@ -198,8 +198,8 @@ export class NormalScene extends Scene {
             checkBonus = RuleAllSpinsMatch.checkBonusMainDiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
             this.stopUpdate = checkBonus;
             if (!checkBonus) {
-                // check bonus (sub-diagonal line 5x5)
-                checkBonus = RuleAllSpinsMatch.checkBonusSubDiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
+                // check bonus (second-diagonal line 5x5)
+                checkBonus = RuleAllSpinsMatch.checkBonusSecondiagonalLine(this.preChoosedPosition,this.SLOT_NUMBER);
                 this.stopUpdate = checkBonus;
             }
         }
