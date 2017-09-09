@@ -9,7 +9,7 @@ export class BonusScene extends Scene {
     private q1: PIXI.Sprite;
     private q2: PIXI.Sprite;
     private q3: PIXI.Sprite;
-    private menu: PIXI.Sprite;
+    private back: PIXI.Sprite;
     private is25Gold: boolean;
     private is50Gold: boolean;
     private is100Gold: boolean;
@@ -48,7 +48,7 @@ export class BonusScene extends Scene {
         //if (this.q1.alpha < 1) this.q1.alpha += 0.01;
         //else ScenesManager.goToScene('menu');
         if (this.is25Gold == true && this.is50Gold == true && this.is100Gold == true) {
-            this.addChild(this.menu);
+            this.addChild(this.back);
         }
     }
 
@@ -70,26 +70,26 @@ export class BonusScene extends Scene {
         this.texture50Gold = PIXI.Texture.fromImage("img/50Gold.png");
         this.texture100Gold = PIXI.Texture.fromImage("img/100Gold.png");
 
-        this.menu = new PIXI.Sprite(PIXI.Texture.fromImage("img/Menubutton.png"));
-        this.menu.position.x = ScenesManager.defaultWidth - 200;
-        this.menu.scale.x = 0.5;
-        this.menu.scale.y = 0.5;
-        this.menu.on("mouseup", this.goTo);
-        this.menu.interactive = true;        
+        this.back = new PIXI.Sprite(PIXI.Texture.fromImage("img/backarrow.png"));
+        this.back.position.x = ScenesManager.defaultWidth - 200;
+        this.back.scale.x = 0.5;
+        this.back.scale.y = 0.5;
+        this.back.on("mouseup", this.goTo);
+        this.back.interactive = true;        
 
         this.q1 = new PIXI.Sprite(PIXI.Texture.fromImage("img/question.png"));
-        this.q1.scale.x = 0.25;
-        this.q1.scale.y = 0.25;
+        this.q1.scale.x = 0.5;
+        this.q1.scale.y = 0.5;
         this.q1.on("mouseup", this.answer25Gold);
 
         this.q2 = new PIXI.Sprite(PIXI.Texture.fromImage("img/question.png"));
-        this.q2.scale.x = 0.25;
-        this.q2.scale.y = 0.25;
+        this.q2.scale.x = 0.5;
+        this.q2.scale.y = 0.5;
         this.q2.on("mouseup", this.answer50Gold);
 
         this.q3 = new PIXI.Sprite(PIXI.Texture.fromImage("img/question.png"));
-        this.q3.scale.x = 0.25;
-        this.q3.scale.y = 0.25; 
+        this.q3.scale.x = 0.5;
+        this.q3.scale.y = 0.5; 
         this.q3.on("mouseup", this.answer100Gold);
 
         this.q1.position.x = 0;
@@ -117,7 +117,7 @@ export class BonusScene extends Scene {
         this.removeChild(this.q1);
         this.removeChild(this.q2);
         this.removeChild(this.q3);
-        this.removeChild(this.menu);
+        this.removeChild(this.back);
     }
 
     private resetGold = () =>{
