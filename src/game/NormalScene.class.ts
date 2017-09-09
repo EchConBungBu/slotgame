@@ -49,24 +49,24 @@ export class NormalScene extends Scene {
         this.slot = new PIXI.Sprite(PIXI.Texture.fromImage("img/slot.png"));
 
         this.spinText = new PIXI.Text(String(this.spin));
-        this.spinText.x = 250;
+        this.spinText.x = ScenesManager.defaultWidth / 2 - 45;
         this.spinText.y = 50;
 
         this.freeSpinText = new PIXI.Text(String(this.spin));
-        this.freeSpinText.x = 0;
-        this.freeSpinText.y = ScenesManager.defaultHeight/2;
+        this.freeSpinText.x = ScenesManager.defaultWidth / 2;
+        this.freeSpinText.y = ScenesManager.defaultHeight / 2;
        
         this.slot.position.x = 0;
-        this.slot.position.y = 0;
+        this.slot.position.y = -3;
 
-        this.buttonMachine.position.x = 600;
+        this.buttonMachine.position.x = ScenesManager.defaultWidth - 62;
         this.buttonMachine.position.y = 150;
 
         this.buttonBonus.position.x = 150;
         this.buttonBonus.position.y = 400;
 
-        this.slot.scale.x = 1.5;
-        this.slot.scale.y = 1.5;
+        this.slot.scale.x = 1.6;
+        this.slot.scale.y = 1.6;
 
         this.buttonMachine.interactive = true;
         this.buttonBonus.interactive = true;
@@ -116,23 +116,14 @@ export class NormalScene extends Scene {
         }
     }
 
-    /*private goTo = () => {
-        if (this.isPaused()) return;                
-            ScenesManager.goToScene('menu');
-    }*/
-
     private startAnimation = () => {
         if(this.gameStatus == this.STATE_INIT || this.gameStatus == this.STATE_CHECK_WIN ) {
             this.stopUpdate = false;    
              this.removeChild(this.buttonBonus);
             this.preChoosedPosition = this.getRandomPositions(); 
             for(var i = 0; i < this.SLOT_NUMBER; i++) {
-                //preChoosedPosition[i] = getRandomInt(0,6);
-                //console.info( "preChoosedPosition["+i+"]="+preChoosedPosition[i] );
-                this.slotSprite[i].tilePosition.y = (-this.preChoosedPosition[i] * this.TILE_HEIGHT) + 10;
+                this.slotSprite[i].tilePosition.y = (-this.preChoosedPosition[i] * this.TILE_HEIGHT) + 1;
                 this.finalTileY[i]= (this.N_CYCLE * this.TILE_HEIGHT * this.TOT_TILES);
-                //console.info( "tilePosition.y["+i+"]="+slotSprite[i].tilePosition.y );
-                //console.info( "finalTile["+i+"]="+finalTileY[i] );
             }
             this.gameStatus = this.STATE_MOVING;
             this.draw();
@@ -240,4 +231,3 @@ export class NormalScene extends Scene {
         }
     }
 }
-
