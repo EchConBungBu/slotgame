@@ -140,9 +140,21 @@ export class NormalScene extends Scene {
         
     private getRandomPositions() {
         var x = this.getRandomInt(0, 100);
-        if(x > 50) {
+        if(x > 90) {
+            x = this.getRandomInt(0, 6);
+            return [5,x,4,x,3];
+        }
+        if(x > 80) {
             x = this.getRandomInt(0, 6);
             return [1,3,2,3,3];
+        }
+        if(x > 70) {
+            x = this.getRandomInt(0, 6);
+            return [1,3,2,3,3];
+        }
+        if(x > 50) {
+            x = this.getRandomInt(0, 6);
+            return [x,x,x,x,x];
         }
         return [this.getRandomInt(0,6)
                 , this.getRandomInt(0,6)
